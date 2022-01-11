@@ -10,6 +10,7 @@ describe('Product Model', () => {
 
             const sql = 'TRUNCATE TABLE products RESTART IDENTITY CASCADE';
             await conn.query(sql);
+            conn.release();
         } catch (err) {
             throw new Error(`err: ${err}`);
         }

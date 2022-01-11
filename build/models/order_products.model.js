@@ -43,28 +43,6 @@ var database_1 = __importDefault(require("../database"));
 var OrderProductsModel = /** @class */ (function () {
     function OrderProductsModel() {
     }
-    //     async index(): Promise<Product[]> {
-    //         try {
-    //             const conn = await db.connect();
-    //             const sql = 'SELECT * FROM products';
-    //             const result = await conn.query(sql);
-    //             conn.release();
-    //             return result.rows;
-    //         } catch (err) {
-    //             throw new Error(`Could not get products. Error: ${err}`);
-    //         }
-    //     }
-    //     async show(id: string): Promise<Product> {
-    //         try {
-    //             const conn = await db.connect();
-    //             const sql = 'SELECT * FROM products WHERE id=$1';
-    //             const result = await conn.query(sql, [id]);
-    //             conn.release();
-    //             return result.rows[0];
-    //         } catch (err) {
-    //             throw new Error(`Could not get product. Error: ${err}`);
-    //         }
-    //     }
     OrderProductsModel.prototype.create = function (newProduct) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, err_1;
@@ -87,7 +65,7 @@ var OrderProductsModel = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not add product. Error: ".concat(err_1));
+                        throw new Error("cant add product to the order: ".concat(err_1));
                     case 4: return [2 /*return*/];
                 }
             });

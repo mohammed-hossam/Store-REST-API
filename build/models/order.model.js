@@ -64,8 +64,50 @@ var OrderModel = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not create order. Error: ".concat(err_1));
+                        throw new Error("cant create order: ".concat(err_1));
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    OrderModel.prototype.showCurrentByUser_id = function (user_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, ordersSql, order, productsSql, products, produtcsIdAndQuanty, finalDataShape, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 4, , 5]);
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        ordersSql = 'SELECT * FROM orders WHERE user_id=$1 ORDER BY id DESC LIMIT 1';
+                        return [4 /*yield*/, conn.query(ordersSql, [user_id])];
+                    case 2:
+                        order = _a.sent();
+                        productsSql = 'SELECT * FROM products INNER JOIN order_products ON products.id = order_products.product_id WHERE order_products.order_id =$1';
+                        return [4 /*yield*/, conn.query(productsSql, [order.rows[0].id])];
+                    case 3:
+                        products = _a.sent();
+                        produtcsIdAndQuanty = products.rows.reduce(function (previousValue, curr) {
+                            previousValue.push({
+                                id: curr.id,
+                                quantity: curr.quantity,
+                            });
+                            return previousValue;
+                        }, []);
+                        finalDataShape = {
+                            order_id: order.rows[0].id,
+                            products: produtcsIdAndQuanty,
+                            user_id: order.rows[0].user_id,
+                            status: order.rows[0].status,
+                        };
+                        // console.log(finalDataShape);
+                        conn.release();
+                        return [2 /*return*/, finalDataShape];
+                    case 4:
+                        err_2 = _a.sent();
+                        throw new Error("cant find products: ".concat(err_2));
+                    case 5: return [2 /*return*/];
                 }
             });
         });

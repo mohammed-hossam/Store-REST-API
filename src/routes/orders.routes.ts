@@ -9,6 +9,10 @@ ordersRouter.post('/', verifyAuthToken, ordersController.addOrder);
 // addProduct to an order by order_id
 ordersRouter.post('/products', verifyAuthToken, ordersController.addProduct);
 // get Current Order By User_id
-ordersRouter.get('/current/:user_id', ordersController.getOrderByUser_id);
+ordersRouter.get(
+    '/current/:user_id',
+    verifyAuthToken,
+    ordersController.getOrderByUser_id
+);
 
 export default ordersRouter;

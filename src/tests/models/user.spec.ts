@@ -1,11 +1,5 @@
 import db from '../../database';
 import UserModel from '../../models/user.model';
-/* interface User {
-    id?: number;
-    firstName: string;
-    lastName: string;
-    password: string;
-} */
 
 const userModel = new UserModel();
 
@@ -16,6 +10,7 @@ describe('User Model', () => {
 
             const sql = 'TRUNCATE TABLE users RESTART IDENTITY CASCADE';
             await conn.query(sql);
+            conn.release();
         } catch (err) {
             throw new Error(`err: ${err}`);
         }

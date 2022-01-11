@@ -8,7 +8,7 @@ const tokenSecret = process.env.TOKEN_SECRET as Secret;
 
 const userModel = new UserModel();
 
-async function getAllUsers(req: Request, res: Response): Promise<void> {
+async function getAllUsers(_req: Request, res: Response): Promise<void> {
     try {
         const data = await userModel.index();
         // console.log(data);

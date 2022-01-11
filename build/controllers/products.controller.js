@@ -109,7 +109,7 @@ function createSingleProduct(req, res) {
                     return [3 /*break*/, 3];
                 case 2:
                     err_3 = _b.sent();
-                    res.status(400).json(err_3);
+                    res.status(400).send('please enter right required data');
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

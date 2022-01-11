@@ -1,8 +1,8 @@
 import db from '../database';
 
 interface Order {
-    id?: string;
-    user_id: string;
+    id?: number;
+    user_id: number;
     status: string;
 }
 
@@ -19,22 +19,43 @@ class OrderModel {
             conn.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not create order. Error: ${err}`);
+            throw new Error(`cant create order: ${err}`);
         }
     }
 
-    async showCurrentByUser_id(user_id: string) {
+    async showCurrentByUser_id(user_id: number) {
         try {
             const conn = await db.connect();
-            const sql =
-                'SELECT * FROM products INNER JOIN order_products ON products.id = order_products.product_id WHERE order_products.order_id =($1)';
+            const ordersSql =
+                'SELECT * FROM orders WHERE user_id=$1 ORDER BY id DESC LIMIT 1';
+            const order = await conn.query(ordersSql, [user_id]);
 
-            // const sql = 'SELECT FROM orders WHERE user_id=($1) and status=activ dec limit 1';
+            const productsSql =
+                'SELECT * FROM products INNER JOIN order_products ON products.id = order_products.product_id WHERE order_products.order_id =$1';
+            const products = await conn.query(productsSql, [order.rows[0].id]);
 
-            const result = await conn.query(sql, [user_id]);
-            // return result;
+            const produtcsIdAndQuanty = products.rows.reduce(
+                (previousValue, curr) => {
+                    previousValue.push({
+                        id: curr.id,
+                        quantity: curr.quantity,
+                    });
+                    return previousValue;
+                },
+                []
+            );
+            // console.log(produtcsIdAndQuanty);
+            const finalDataShape = {
+                order_id: order.rows[0].id,
+                products: produtcsIdAndQuanty,
+                user_id: order.rows[0].user_id,
+                status: order.rows[0].status,
+            };
+            // console.log(finalDataShape);
+            conn.release();
+            return finalDataShape;
         } catch (err) {
-            throw new Error(`Could not create order. Error: ${err}`);
+            throw new Error(`cant find products: ${err}`);
         }
     }
 }

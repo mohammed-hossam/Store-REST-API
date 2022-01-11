@@ -61,7 +61,7 @@ var ProductModel = /** @class */ (function () {
                         return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not get products. Error: ".concat(err_1));
+                        throw new Error("cant get products: ".concat(err_1));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -85,7 +85,7 @@ var ProductModel = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_2 = _a.sent();
-                        throw new Error("Could not get product. Error: ".concat(err_2));
+                        throw new Error("cant get product: ".concat(err_2));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -112,7 +112,7 @@ var ProductModel = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_3 = _a.sent();
-                        throw new Error("Could not create product. Error: ".concat(err_3));
+                        throw new Error("cant create product: ".concat(err_3));
                     case 4: return [2 /*return*/];
                 }
             });

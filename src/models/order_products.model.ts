@@ -1,10 +1,10 @@
 import db from '../database';
 
 interface OrderProduct {
-    id?: string;
-    order_id: string;
-    product_id: string;
-    quantity: string;
+    id?: number;
+    order_id: number;
+    product_id: number;
+    quantity: number;
 }
 
 class OrderProductsModel {
@@ -21,7 +21,7 @@ class OrderProductsModel {
             conn.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`cant add product to the order, error: ${err}`);
+            throw new Error(`cant add product to the order: ${err}`);
         }
     }
 }

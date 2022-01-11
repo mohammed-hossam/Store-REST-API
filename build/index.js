@@ -45,14 +45,3 @@ app.use(function (req, res) {
     res.status(404).send('page not found please enter correct URL');
 });
 exports.default = app;
-/* const _routes: [string, Router][] = [
-  ['/products', ProductController],
-  ['/users', UserController],
-  ['/orders', OrderController]
-];
-
-export const routes: Function = (app: Application): void => {
-  _routes.forEach((route) => {
-    const [url, controller] = route;
-    app.use(url, controller);
-  }); */

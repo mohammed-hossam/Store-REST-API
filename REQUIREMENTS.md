@@ -8,22 +8,29 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Products
 
--   Index GET: /api/v1/products
--   Show GET: /api/v1/products/:product_id
--   Create [token required] POST: /api/v1/products
-<!-- - [OPTIONAL] Top 5 most popular products
--   [OPTIONAL] Products by category (args: product category) -->
+-   Index `GET:/api/v1/products`
+-   Show `GET:/api/v1/products/:product_id`
+-   Create [token required] `POST:/api/v1/products`
 
 #### Users
 
--   Index [token required] GET: /api/v1/users
--   Show [token required] GET: /api/v1/users/:user_id
--   Create N[token required] POST: /api/v1/users
+-   Index [token required] `GET:/api/v1/users`
+-   Show [token required] `GET:/api/v1/users/:user_id`
+-   Create N[token required] `POST:/api/v1/users`
+
+###### added
+
+-   Signup `POST:/api/v1/users/signup` (added to create token first time)
 
 #### Orders
 
--   Current Order by user (args: user id)[token required] GET: /api/v1/orders/current/:user_id
-<!-- - [OPTIONAL] Completed Orders by user (args: user id)[token required] -->
+-   Current Order by user (args: user id)[token required]
+    `GET:/api/v1/orders/current/:user_id`
+
+###### added
+
+-   Create `POST:/api/v1/orders/products` (added to add orders)
+-   AddProduct `POST:/api/v1/orders/products` (added to add product to an order by order_id)
 
 ## Data Shapes
 
@@ -32,7 +39,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 -   id
 -   name
 -   price
-<!-- - [OPTIONAL] category -->
 
 #### User
 

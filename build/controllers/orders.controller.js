@@ -45,64 +45,90 @@ var orderModel = new order_model_1.default();
 var orderProductsModel = new order_products_model_1.default();
 function addOrder(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, user_id, status_1, data, err_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var user_id, status_1, data, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 2, , 3]);
-                    _a = req.body, user_id = _a.user_id, status_1 = _a.status;
+                    _a.trys.push([0, 4, , 5]);
+                    user_id = Number(req.body.user_id);
+                    status_1 = req.body.status;
+                    if (!(user_id && status_1)) return [3 /*break*/, 2];
                     return [4 /*yield*/, orderModel.create({ user_id: user_id, status: status_1 })];
                 case 1:
-                    data = _b.sent();
+                    data = _a.sent();
                     res.status(200).json(data);
                     return [3 /*break*/, 3];
                 case 2:
-                    err_1 = _b.sent();
-                    res.status(400).json(err_1);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    res.status(400).send('please enter right required data');
+                    _a.label = 3;
+                case 3: return [3 /*break*/, 5];
+                case 4:
+                    err_1 = _a.sent();
+                    res.status(400).send('operation failed');
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
             }
         });
     });
 }
 function addProduct(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, order_id, product_id, quantity, data, err_2;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var order_id, product_id, quantity, data, err_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 2, , 3]);
-                    _a = req.body, order_id = _a.order_id, product_id = _a.product_id, quantity = _a.quantity;
+                    _a.trys.push([0, 4, , 5]);
+                    order_id = Number(req.body.order_id);
+                    product_id = Number(req.body.product_id);
+                    quantity = Number(req.body.quantity);
+                    if (!(order_id && product_id && quantity)) return [3 /*break*/, 2];
                     return [4 /*yield*/, orderProductsModel.create({
                             order_id: order_id,
                             product_id: product_id,
                             quantity: quantity,
                         })];
                 case 1:
-                    data = _b.sent();
+                    data = _a.sent();
                     res.status(200).json(data);
                     return [3 /*break*/, 3];
                 case 2:
-                    err_2 = _b.sent();
-                    res.status(400).json(err_2);
+                    res.status(400).send('please enter right required data');
+                    _a.label = 3;
+                case 3: return [3 /*break*/, 5];
+                case 4:
+                    err_2 = _a.sent();
+                    res.status(400).send('please enter right required data');
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
+function getOrderByUser_id(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var user_id, data, err_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    user_id = Number(req.params.user_id);
+                    return [4 /*yield*/, orderModel.showCurrentByUser_id(user_id)];
+                case 1:
+                    data = _a.sent();
+                    res.status(200).json(data);
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_3 = _a.sent();
+                    res.status(400).json('please enter right required data');
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });
     });
 }
-/* async function getOrderByUser_id(req: Request, res: Response): Promise<void> {
-    try {
-        const user_id = req.params.product_id;
-        const data = await orderModel.showCurrentByUser_id(user_id);
-        res.status(200).json(data);
-    } catch (err) {
-        res.status(400).json(err);
-    }
-} */
 var ordersController = {
     addOrder: addOrder,
     addProduct: addProduct,
-    // getOrderByUser_id,
+    getOrderByUser_id: getOrderByUser_id,
 };
 exports.default = ordersController;

@@ -7,7 +7,8 @@ const orderProductsModel = new OrderProductsModel();
 
 async function addOrder(req: Request, res: Response): Promise<void> {
     try {
-        const { user_id, status } = req.body;
+        const user_id = Number(req.body.user_id);
+        const { status } = req.body;
 
         if (user_id && status) {
             const data = await orderModel.create({ user_id, status });
@@ -22,7 +23,9 @@ async function addOrder(req: Request, res: Response): Promise<void> {
 
 async function addProduct(req: Request, res: Response): Promise<void> {
     try {
-        const { order_id, product_id, quantity } = req.body;
+        const order_id = Number(req.body.order_id);
+        const product_id = Number(req.body.product_id);
+        const quantity = Number(req.body.quantity);
         if (order_id && product_id && quantity) {
             const data = await orderProductsModel.create({
                 order_id,
@@ -40,11 +43,11 @@ async function addProduct(req: Request, res: Response): Promise<void> {
 
 async function getOrderByUser_id(req: Request, res: Response): Promise<void> {
     try {
-        const user_id = req.params.product_id;
+        const user_id = Number(req.params.user_id);
         const data = await orderModel.showCurrentByUser_id(user_id);
         res.status(200).json(data);
     } catch (err) {
-        res.status(400).json(err);
+        res.status(400).json('please enter right required data');
     }
 }
 

@@ -12,7 +12,7 @@ const mainApiRoute = '/api/v1';
 app.use(express.json({ type: 'application/json' }));
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}/`);
+    // console.log(`http://localhost:${port}/`);
 });
 
 app.get('/', (req: Request, res: Response): void => {
@@ -23,20 +23,8 @@ app.use(`${mainApiRoute}/users`, usersRouter);
 app.use(`${mainApiRoute}/products`, productsRouter);
 app.use(`${mainApiRoute}/orders`, ordersRouter);
 
-app.use((req: Request, res: Response) => {
+app.use((_req: Request, res: Response) => {
     res.status(404).send('page not found please enter correct URL');
 });
 
 export default app;
-
-/* const _routes: [string, Router][] = [
-  ['/products', ProductController],
-  ['/users', UserController],
-  ['/orders', OrderController]
-];
-
-export const routes: Function = (app: Application): void => {
-  _routes.forEach((route) => {
-    const [url, controller] = route;
-    app.use(url, controller);
-  }); */

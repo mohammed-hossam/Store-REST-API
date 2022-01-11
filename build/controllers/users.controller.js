@@ -84,7 +84,7 @@ function getSingleUser(req, res) {
                     return [2 /*return*/, res.status(400).send('no data found wih this id')];
                 case 2:
                     err_2 = _a.sent();
-                    return [2 /*return*/, res.status(400).json(err_2)];
+                    return [2 /*return*/, res.status(400).send('please enter right required data')];
                 case 3: return [2 /*return*/];
             }
         });

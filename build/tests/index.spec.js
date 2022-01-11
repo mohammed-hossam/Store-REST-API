@@ -40,12 +40,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
+var database_1 = __importDefault(require("../database"));
 var index_1 = __importDefault(require("../index"));
 var request = (0, supertest_1.default)(index_1.default);
 describe('Endpoints', function () {
-    afterAll(function (done) {
-        done();
-    });
+    var token;
+    // let user_id: string;
+    afterAll(function (done) { return __awaiter(void 0, void 0, void 0, function () {
+        var conn, sql;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, database_1.default.connect()];
+                case 1:
+                    conn = _a.sent();
+                    sql = 'TRUNCATE TABLE order_Products, orders, users, products RESTART IDENTITY CASCADE';
+                    return [4 /*yield*/, conn.query(sql)];
+                case 2:
+                    _a.sent();
+                    conn.release();
+                    done();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('test mainapp server', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
@@ -58,28 +75,160 @@ describe('Endpoints', function () {
             }
         });
     }); });
-    it('test getting products endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/v1/products')];
-                case 1:
-                    response = _a.sent();
-                    expect(response.status).toBe(200);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it('test getting product by id endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/v1/products/1')];
-                case 1:
-                    response = _a.sent();
-                    expect(response.status).toBe(200);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
+    describe('users', function () {
+        it('test signup first to get token', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .post('/api/v1/users/signup')
+                            .send({
+                            firstname: 'mohamed',
+                            lastname: 'hossam',
+                            password: 'password123',
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        // console.log(response);
+                        token = response.body;
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('test create single user', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .post('/api/v1/users')
+                            .send({
+                            firstname: 'test',
+                            lastname: 'test2',
+                            password: 'test123',
+                        })
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('test get user by id', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .get('/api/v1/users/1')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('test getting all users', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .get('/api/v1/users/')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    });
+    describe('products', function () {
+        it('test getting products endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request.get('/api/v1/products')];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('test getting product by id endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request.get('/api/v1/products/1')];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('test adding product endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .post('/api/v1/products')
+                            .send({ name: 'test', price: '20' })
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    });
+    describe('orders', function () {
+        it('test adding order', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .post('/api/v1/orders')
+                            .send({ user_id: '1', status: 'active' })
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('test addProduct to an order by order_id', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .post('/api/v1/orders/products')
+                            .send({ order_id: '1', product_id: '1', quantity: '5' })
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('test get Current Order By User_id', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, request
+                            .get('/api/v1/orders/current/1')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    });
 });

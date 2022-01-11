@@ -62,6 +62,7 @@ describe('User Model', function () {
                     return [4 /*yield*/, conn.query(sql)];
                 case 2:
                     _a.sent();
+                    conn.release();
                     return [3 /*break*/, 4];
                 case 3:
                     err_1 = _a.sent();

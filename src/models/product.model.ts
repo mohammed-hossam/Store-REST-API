@@ -15,7 +15,7 @@ class ProductModel {
             conn.release();
             return result.rows;
         } catch (err) {
-            throw new Error(`Could not get products. Error: ${err}`);
+            throw new Error(`cant get products: ${err}`);
         }
     }
 
@@ -27,7 +27,7 @@ class ProductModel {
             conn.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not get product. Error: ${err}`);
+            throw new Error(`cant get product: ${err}`);
         }
     }
 
@@ -43,7 +43,7 @@ class ProductModel {
             conn.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not create product. Error: ${err}`);
+            throw new Error(`cant create product: ${err}`);
         }
     }
 }
