@@ -15,27 +15,26 @@
 
 -   make user can create a db => `ALTER USER shoppingcompany CREATEDB;`
 
--   create the project db => `CREATE DATABASE storeapp/storeapptest`
+-   create the project db => `CREATE DATABASE storeapp/storeapp_test`
 
--   connect to the project db => `\c storeapp/storeapptest`
+-   connect to the project db => `\c storeapp/storeapp_test`
 
--   grant privileges => `GRANT ALL PRIVILEGES ON DATABASE storeapp/storeapptest TO shoppingcompany;`
+-   grant privileges => `GRANT ALL PRIVILEGES ON DATABASE storeapp/storeapp_test TO shoppingcompany;`
 
 ## (3) .env variables:
 
 -   PORT=3000
 -   ENV=dev
-
--   DB_NAME=`storeapp`
--   DB_NAME_TEST=`storeapptest`
--   DB_PASS=`48651532`
--   DB_USER=`shoppingcompany`
--   DB_OWNE=`shoppingcompany`
--   DB_HOST=`localhost`
--   DB_PORT=`5432`
--   PEPPER=`bcrypt-pepper-secure`
--   SALT_ROUNDS=`10`
--   TOKEN_SECRET = `atokensecretforsecure`
+-   DB_NAME=storeapp
+-   DB_NAME_TEST=storeapp_test
+-   DB_PASS=48651532
+-   DB_USER=shoppingcompany
+-   DB_OWNE=shoppingcompany
+-   DB_HOST=localhost
+-   DB_PORT=5432
+-   PEPPER=bcrypt-pepper-secure
+-   SALT_ROUNDS=10
+-   TOKEN_SECRET=atokensecretforsecure
 
 ## (4) Examples for Json data for endpoint:
 
