@@ -32,25 +32,30 @@ These are the notes from a meeting with the frontend developer that describe wha
 -   Create `POST:/api/v1/orders/products` (added to add orders)
 -   AddProduct `POST:/api/v1/orders/products` (added to add product to an order by order_id)
 
-## Data Shapes
+## DataBase Schema
 
-#### Product
+#### products Table:
 
--   id
--   name
--   price
+-   id SERIAL PRIMARY KEY
+-   name VARCHAR
+-   price VARCHAR
 
-#### User
+#### users Table:
 
--   id
--   firstName
--   lastName
--   password
+-   id `SERIAL PRIMARY KEY`
+-   firstName `VARCHAR`
+-   lastName `VARCHAR`
+-   password `VARCHAR`
 
-#### Orders
+#### orders Table:
 
--   id
--   id of each product in the order
--   quantity of each product in the order
--   user_id
--   status of order (active or complete)
+-   id `SERIAL PRIMARY KEY`
+-   user_id `INTEGER REFERENCES users(id)`
+-   status `VARCHAR`
+
+#### order_products Table:
+
+-   id `SERIAL PRIMARY KEY`
+-   order_id `INTEGER REFERENCES orders(id)`
+-   product_id `INTEGER REFERENCES products(id)`
+-   quantity `INTEGER`
