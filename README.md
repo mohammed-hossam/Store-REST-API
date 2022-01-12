@@ -15,11 +15,11 @@
 
 -   make user can create a db => `ALTER USER shoppingcompany CREATEDB;`
 
--   create the project db => `CREATE DATABASE storeapp/storeapp_test`
+-   create the project db => `CREATE DATABASE storeapp/storeapptest`
 
--   connect to the project db => `\c storeapp/storeapp_test`
+-   connect to the project db => `\c storeapp/storeapptest`
 
--   grant privileges => `GRANT ALL PRIVILEGES ON DATABASE storeapp/storeapp_test TO shoppingcompany;`
+-   grant privileges => `GRANT ALL PRIVILEGES ON DATABASE storeapp/storeapptest TO shoppingcompany;`
 
 ## (3) .env variables:
 
@@ -27,7 +27,7 @@
 -   ENV=dev
 
 -   DB_NAME=`storeapp`
--   DB_NAME_TEST=`storeapp_test`
+-   DB_NAME_TEST=`storeapptest`
 -   DB_PASS=`48651532`
 -   DB_USER=`shoppingcompany`
 -   DB_OWNE=`shoppingcompany`
